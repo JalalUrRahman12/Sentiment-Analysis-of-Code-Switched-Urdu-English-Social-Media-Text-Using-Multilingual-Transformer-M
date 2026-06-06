@@ -115,8 +115,7 @@ def main():
     plt.xlabel('Sentiment Class', fontsize=12)
     plt.ylabel('Count', fontsize=12)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.tight_layout()
-    plt.savefig(os.path.join(viz_dir, 'class_distribution.png'), dpi=300)
+    plt.savefig(os.path.join(viz_dir, 'class_distribution.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("Generated class_distribution.png")
     
@@ -132,8 +131,7 @@ def main():
     plt.xlabel('Number of Tokens', fontsize=12)
     plt.ylabel('Frequency', fontsize=12)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.tight_layout()
-    plt.savefig(os.path.join(viz_dir, 'sentence_length_histogram.png'), dpi=300)
+    plt.savefig(os.path.join(viz_dir, 'sentence_length_histogram.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("Generated sentence_length_histogram.png")
     
@@ -153,15 +151,14 @@ def main():
     print(f"Urdu/Roman Urdu tokens: {len(ur_tokens)}")
     
     # 3. Visualization: Language Distribution
-    plt.figure(figsize=(6, 6))
+    plt.figure(figsize=(8, 6))
     labels = ['English / Transliterated Latin', 'Urdu / Roman Urdu keywords']
     sizes = [len(en_tokens), len(ur_tokens)]
     colors = ['#2E74B5', '#EBF3FB']
     plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140, colors=colors, 
             textprops={'fontsize': 11, 'weight': 'bold'}, wedgeprops={'edgecolor': 'gray'})
-    plt.title('Token Language Script Distribution', fontsize=14, fontweight='bold', color='#1F497D')
-    plt.tight_layout()
-    plt.savefig(os.path.join(viz_dir, 'language_distribution.png'), dpi=300)
+    plt.title('Token Language Script Distribution', fontsize=14, fontweight='bold', color='#1F497D', pad=20)
+    plt.savefig(os.path.join(viz_dir, 'language_distribution.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("Generated language_distribution.png")
     
@@ -176,13 +173,13 @@ def main():
     plt.xlabel('Frequency', fontsize=12)
     plt.ylabel('Token', fontsize=12)
     plt.grid(axis='x', linestyle='--', alpha=0.7)
-    plt.tight_layout()
-    plt.savefig(os.path.join(viz_dir, 'token_frequency_english.png'), dpi=300)
+    plt.savefig(os.path.join(viz_dir, 'token_frequency_english.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("Generated token_frequency_english.png")
     
-    # 5. Visualization: Top 20 Urdu Tokens
-    ur_counter = Counter(ur_tokens)
+    # 5. Visualization: Top 20 Urdu Tokens (filtering out Arabic script characters to ensure clean rendering on all systems)
+    ur_roman_only = [t for t in ur_tokens if not any('\u0600' <= ch <= '\u06FF' for ch in t)]
+    ur_counter = Counter(ur_roman_only)
     top_ur = ur_counter.most_common(20)
     top_ur_df = pd.DataFrame(top_ur, columns=['Token', 'Count'])
     
@@ -192,8 +189,7 @@ def main():
     plt.xlabel('Frequency', fontsize=12)
     plt.ylabel('Token', fontsize=12)
     plt.grid(axis='x', linestyle='--', alpha=0.7)
-    plt.tight_layout()
-    plt.savefig(os.path.join(viz_dir, 'token_frequency_urdu.png'), dpi=300)
+    plt.savefig(os.path.join(viz_dir, 'token_frequency_urdu.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("Generated token_frequency_urdu.png")
     

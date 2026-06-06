@@ -25,3 +25,6 @@ train_conll.txt
 .vscode/
 .idea/
 .ipynb_checkpoints/
+
+# Exclude temporary MS Word files
+~$*

@@ -425,7 +425,7 @@ def main():
     add_table(doc, contrib_headers, contrib_rows, col_widths=[1.5, 1.5, 3.0, 1.0])
     
     # Save document
-    output_path = 'Assignment 3/Jalal_Sultan_Assignment3_Final_v2.docx'
+    output_path = 'Assignment 3/Jalal_Sultan_Assignment3_Final_v3.docx'
     doc.save(output_path)
     print(f"Document compiled successfully and saved to {output_path}!")
 
