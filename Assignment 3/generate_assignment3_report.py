@@ -337,7 +337,9 @@ def main():
              "while the BiLSTM sequence classifier was implemented from scratch using PyTorch layers. The mBERT "
              "model leverages the HuggingFace transformers library. Standard train/val/test splits (80/10/10) "
              "were used to evaluate the generalization capacity of all models on unseen data, ensuring "
-             "reproducible and structured experimentation.")
+             "reproducible and structured experimentation. All source code files, preprocessed datasets, and "
+             "model configuration assets are hosted and fully documented in the public GitHub repository: "
+             "https://github.com/JalalUrRahman12/Sentiment-Analysis-of-Code-Switched-Urdu-English-Social-Media-Text-Using-Multilingual-Transformer-M.git")
              
     # Show pipeline overview
     add_body(doc, "The implementation steps are structured as follows:", bold_prefix="Pipeline Stages: ")
@@ -423,7 +425,7 @@ def main():
     add_table(doc, contrib_headers, contrib_rows, col_widths=[1.5, 1.5, 3.0, 1.0])
     
     # Save document
-    output_path = 'Assignment 3/Jalal_Sultan_Assignment3_Final.docx'
+    output_path = 'Assignment 3/Jalal_Sultan_Assignment3_Final_v2.docx'
     doc.save(output_path)
     print(f"Document compiled successfully and saved to {output_path}!")
 
