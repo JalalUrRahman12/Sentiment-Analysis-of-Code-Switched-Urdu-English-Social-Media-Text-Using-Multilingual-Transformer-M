@@ -1,0 +1,135 @@
+# ============================================================
+# NLP Preprocessing Pipeline
+# Project: Sentiment Analysis of Code-Switched Urdu-English Text
+# Course: CSC-355 Natural Language Processing
+# Namal University Mianwali
+# ============================================================
+
+import re
+import string
+import unicodedata
+import emoji
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+import nltk
+
+nltk.download('stopwords', quiet=True)
+nltk.download('punkt', quiet=True)
+
+# ---- Custom Urdu Stopword List ----
+URDU_STOPWORDS = {
+    'he', 'hein', 'ka', 'ki', 'ke', 'mein', 'ne', 'se', 'par',
+    'aur', 'yeh', 'woh', 'ek', 'bhi', 'to', 'jo', 'ho',
+    'is', 'ab', 'tha', 'thi', 'the', 'hum', 'aap', 'mujhe',
+    '\u06c1\u06d2', '\u06c1\u06cc\u06ba', '\u06a9\u0627', '\u06a9\u06cc',
+    '\u06a9\u06d2', '\u0645\u06cc\u06ba', '\u0646\u06d2', '\u0633\u06d2',
+    '\u067e\u0631', '\u0627\u0648\u0631', '\u06cc\u06c1', '\u0648\u06c1',
+    '\u0627\u06cc\u06a9', '\u0628\u06be\u06cc', '\u062a\u0648',
+    '\u06a9\u06c1', '\u062c\u0648', '\u06c1\u0648', '\u0627\u0633',
+    '\u0627\u0628', '\u062a\u06be\u0627', '\u062a\u06be\u06cc',
+    '\u062a\u06be\u06d2', '\u06c1\u0645', '\u0622\u067e',
+    '\u0645\u062c\u06be\u06d2'
+}
+
+ENGLISH_STOPWORDS = set(stopwords.words('english'))
+
+# ---- Step 1: Unicode Normalization ----
+def normalize_unicode(text: str) -> str:
+    # Normalize Unicode to NFC -- critical for consistent Urdu handling.
+    return unicodedata.normalize('NFC', text)
+
+# ---- Step 2: Emoji Handling ----
+def convert_emojis(text: str) -> str:
+    # Convert emojis to descriptive text labels (e.g., smiling_face).
+    # Emojis are strong sentiment signals -- removing them loses information.
+    return emoji.demojize(text, delimiters=(" ", " "))
+
+# ---- Step 3: URL Removal ----
+def remove_urls(text: str) -> str:
+    # Remove all URLs -- they carry no sentiment value.
+    return re.sub(r'http\S+|www\.\S+', '', text)
+
+# ---- Step 4: Mention and Hashtag Cleaning ----
+def clean_mentions_hashtags(text: str) -> str:
+    # Remove @mentions entirely. Strip # from hashtags but keep the word.
+    text = re.sub(r'@\w+', '', text)       # Remove @mentions
+    text = re.sub(r'#(\w+)', r'\1', text)  # Remove # but keep word
+    return text
+
+# ---- Step 5: Lowercasing (English only) ----
+def lowercase_english(text: str) -> str:
+    # Lowercase the text -- affects only English/Roman characters.
+    return text.lower()
+
+# ---- Step 6: Noise Removal ----
+def remove_noise(text: str) -> str:
+    # Remove HTML entities and special characters.
+    # Preserve Urdu Unicode range (U+0600-U+06FF) and sentiment punct (! ?).
+    text = re.sub(r'<.*?>', '', text)   # Remove HTML tags
+    text = re.sub(r'[^\w\s\u0600-\u06FF!?]', ' ', text)
+    return text
+
+# ---- Step 7: Tokenization ----
+def tokenize(text: str) -> list:
+    # Tokenize using NLTK word_tokenize.
+    # Note: mBERT's WordPiece tokenizer will replace this in Milestone 3.
+    return word_tokenize(text)
+
+# ---- Step 8: Bilingual Stopword Removal ----
+def remove_stopwords(tokens: list) -> list:
+    # Remove both English and Urdu stopwords.
+    all_stopwords = ENGLISH_STOPWORDS.union(URDU_STOPWORDS)
+    return [token for token in tokens if token not in all_stopwords]
+
+# ---- Step 9: Number and Punctuation Filtering ----
+def filter_numbers_and_punct(tokens: list) -> list:
+    # Remove pure number tokens. Retain ! and ? for sentiment value.
+    return [t for t in tokens if not t.isdigit() and t.strip()]
+
+# ---- Step 10: Language Identification per Token ----
+def tag_language(tokens: list) -> list:
+    # Tag each token as 'UR' (Urdu) or 'EN' (English) via Unicode heuristic.
+    # Urdu characters fall in range U+0600-U+06FF.
+    tagged = []
+    for token in tokens:
+        if any('\u0600' <= ch <= '\u06FF' for ch in token):
+            tagged.append((token, 'UR'))
+        else:
+            tagged.append((token, 'EN'))
+    return tagged
+
+# ---- FULL PIPELINE ----
+def preprocess(text: str, verbose: bool = True) -> list:
+    # Complete preprocessing pipeline for code-switched Urdu-English text.
+    # Returns list of (token, language_tag) tuples.
+    if verbose:
+        print(f"\n{'='*55}")
+        print(f"INPUT : {text}")
+
+    text = normalize_unicode(text)            # Step 1
+    text = convert_emojis(text)               # Step 2
+    text = remove_urls(text)                  # Step 3
+    text = clean_mentions_hashtags(text)      # Step 4
+    text = lowercase_english(text)            # Step 5
+    text = remove_noise(text)                 # Step 6
+    tokens = tokenize(text)                   # Step 7
+    tokens = remove_stopwords(tokens)         # Step 8
+    tokens = filter_numbers_and_punct(tokens) # Step 9
+    tagged_tokens = tag_language(tokens)      # Step 10
+
+    if verbose:
+        print(f"OUTPUT: {tagged_tokens}")
+    return tagged_tokens
+
+# ============================================================
+# SAMPLE INPUT / OUTPUT DEMONSTRATION
+# ============================================================
+sample_texts = [
+    "Yeh film bohat achi thi! Must watch karo #Lollywood @user123 https://t.co/abc",
+    "government nay kuch nahi kiya is maslay par",
+    "Absolutely LOVED the new drama! Urdu dramas are unmatched #Drama2024"
+]
+
+print("PREPROCESSING PIPELINE - DEMONSTRATION")
+for text in sample_texts:
+    result = preprocess(text)

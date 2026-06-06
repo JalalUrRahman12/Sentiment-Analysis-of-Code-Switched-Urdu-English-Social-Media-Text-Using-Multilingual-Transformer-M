@@ -1,0 +1,278 @@
+Sentiment Analysis of Code-Switched Urdu-English Social Media Text Using Multilingual Transformer Models: A Literature Review
+Abstract
+This literature review explores the evolving landscape of sentiment analysis, specifically focusing on the challenges and advancements in processing code-switched Roman Urdu-English social media text. The inherent complexities of this linguistic phenomenon, characterized by ambiguous grammar, lack of standardized spelling, and dynamic cross-lingual shifts, pose significant hurdles for traditional Natural Language Processing (NLP) models. This review systematically categorizes and analyzes recent research into three primary approaches: Traditional Machine Learning, Deep Learning, and Transformer-Based Models. For each approach, key studies are examined based on their problem statements, proposed solutions, datasets, performance metrics, key findings, and limitations. A comparative analysis highlights the progression from feature-engineered models to sophisticated deep learning architectures and, ultimately, to multilingual transformer models like mBERT and XLM-RoBERTa, which demonstrate superior contextual understanding. The review concludes with a comprehensive comparative table and a bibliography in IEEE style, providing a foundational understanding for future research in this challenging domain.
+1. Introduction
+The proliferation of social media platforms has led to an unprecedented volume of user-generated content, much of which is expressed in informal, code-switched languages. In regions like Pakistan, social media communication frequently involves Roman Urdu-English code-switched text, a linguistic blend where Urdu is written using the Roman script and interspersed with English words or phrases [1]. This phenomenon presents unique challenges for sentiment analysis due to its inherent grammatical ambiguity, the absence of standardized spelling conventions, and frequent mid-sentence cross-lingual shifts [2]. Traditional sentiment analysis models, primarily developed for monolingual and formally structured text, often struggle to accurately capture the nuanced sentiment embedded within such complex linguistic structures.
+This literature review aims to provide a comprehensive overview of the research conducted on sentiment analysis of code-switched Roman Urdu-English text. It systematically examines various methodologies, from conventional machine learning techniques to advanced deep learning and transformer-based models. The objective is to identify the strengths and weaknesses of existing approaches, highlight significant advancements, and establish a robust foundation for further research in this critical area of Natural Language Processing. The review is structured into three main sections, reflecting the chronological and methodological evolution of sentiment analysis techniques.
+2. Literature Review
+2.1. Traditional Machine Learning Approaches
+Early efforts in sentiment analysis, particularly for low-resource languages like Roman Urdu, predominantly relied on 
+traditional machine learning (ML) algorithms
+ coupled with hand-crafted features. These methods often involved statistical models and rule-based systems, which, despite their simplicity, provided foundational insights into the challenges of processing informal text. However, their performance was often constrained by the quality and representativeness of the engineered features and their limited ability to capture complex linguistic nuances.
+Bilal et al. (2016) addressed the problem of sentiment classification for Roman Urdu opinions extracted from blogs [3]. Their proposed solution involved applying Naïve Bayes (NB), Decision Tree (DT), and K-Nearest Neighbor (KNN) classifiers, utilizing a Bag of Words (BoW) feature representation. The study used a relatively small dataset of 300 opinions, equally split between positive and negative labels. Their key finding indicated that Naïve Bayes outperformed both Decision Tree and KNN in terms of accuracy, precision, recall, and F-measure, suggesting its comparative effectiveness for smaller Roman Urdu datasets. However, the primary limitation of this work was the extremely small dataset size, which significantly restricts the generalizability and robustness of the models to real-world, diverse social media content.
+Expanding on the application of traditional ML, Chandio et al. (2022) focused on sentiment analysis of Roman Urdu within e-commerce reviews [4]. They employed SVM, Naive Bayes, Decision Tree, and KNN algorithms, also relying on the BoW model for feature extraction. This research utilized what was, at the time, considered the largest Roman Urdu dataset, comprising approximately 26,824 reviews. The study reported that SVM achieved an accuracy of 67%, demonstrating its robustness for larger Roman Urdu datasets. A key finding was the observation that the colloquial nature of Roman Urdu posed significant challenges for traditional ML models, leading to a performance plateau. The main limitation identified was the models' struggle with the inherent spelling variations and lack of standardization in Roman Urdu, which hindered further accuracy improvements.
+More recently, Hannan et al. (2025) tackled the issues of low resource status, high informality, and spelling inconsistencies prevalent in Roman Urdu sentiment analysis [5]. They proposed a hybrid feature extraction strategy combining word-level and character-level TF-IDF vectors, which were then fed into various classifiers including Logistic Regression, SVM, Naïve Bayes, Random Forest, and a Hard Voting Ensemble. Their dataset consisted of over 22,000 Roman Urdu reviews. The ensemble classifier achieved the best overall result with an accuracy of 79.19%, while Logistic Regression showed the highest individual accuracy at 78.40%. This hybrid approach was found to be more effective in capturing semantic context and handling spelling variations compared to purely word-level representations. Nevertheless, the models still faced difficulties with extreme code-mixing and deep semantic shifts, indicating a persistent challenge for traditional methods.
+Qureshi et al. (2022) investigated sentiment analysis of Roman Urdu reviews, emphasizing the importance of feature engineering [6]. They applied supervised machine learning methods, including SVM and Naïve Bayes, to a dataset of 24,000 Roman Urdu reviews. Their work highlighted that meticulous feature engineering was crucial for achieving high performance, with their models reaching a maximum accuracy of 91%. This underscored that for informal languages, careful selection and engineering of features can significantly impact model effectiveness. A notable limitation, however, was the high dependency on manual feature selection, which can be labor-intensive and may not generalize well across different datasets or domains.
+Rafique et al. (2019) also contributed to the sentiment classification of Roman Urdu opinions, employing Naïve Bayes, LRSGD, and SVM [7]. While the exact dataset size varied, their models consistently achieved an accuracy exceeding 80%. Their findings suggested that SVM and Naïve Bayes are reliable classifiers for Roman Urdu when sufficient training data is available. However, a significant limitation was the potential scalability issues when dealing with larger and more diverse social media corpora, where the complexities of code-switching and informal language become more pronounced.
+Finally, Malik et al. (2023) conducted sentiment analysis on a Kaggle Roman Urdu dataset using Naïve Bayes, SVM, and Random Forest [8]. Their study found that Naïve Bayes achieved the highest accuracy among the tested algorithms on this specific dataset. This indicated that for relatively structured datasets, even if informal, traditional ML models can yield competitive results. The primary limitation of this work is that its findings might not generalize effectively to real-time, noisy social media text, which often contains more dynamic and unpredictable linguistic variations than curated datasets.
+2.2. Deep Learning Approaches
+The advent of 
+deep learning (DL) architectures
+ marked a significant shift in sentiment analysis research, offering models capable of automatically learning intricate features from raw text data, thereby reducing the reliance on manual feature engineering. Recurrent Neural Networks (RNNs), particularly Long Short-Term Memory (LSTM) networks, and Convolutional Neural Networks (CNNs) have been widely adopted for their ability to capture sequential dependencies and local patterns in text, respectively. These models have shown promise in handling the complexities of code-switched and morphologically rich languages.
+Khan et al. (2022) addressed the challenges posed by morphological complexities and varied dialects in Roman Urdu and English sentiment analysis [9]. They proposed a hybrid CNN-LSTM architecture, where LSTM layers were utilized to preserve long-term dependencies and CNN layers were employed for extracting local features. The feature maps from this hybrid model were then fed into various machine learning classifiers, with SVM performing optimally. Their extensive tests on four corpora—MDPI, RUSA, RUSA-19, and UCL datasets—yielded accuracies up to 90.4%. A key finding was that combining CNN and LSTM significantly improved accuracy by up to 5% over baseline models. However, the high computational cost associated with training such hybrid models and the requirement for large, annotated datasets were identified as notable limitations.
+In a related study, Chandio et al. (2022) introduced an Attention-Based RU-BiLSTM model to tackle the colloquial nature and spelling variations in Roman Urdu [10]. Their solution leveraged Bidirectional LSTM (BiLSTM) combined with an attention mechanism, using various neural word embeddings such as Word2Vec, GloVe, and FastText. The model was evaluated on the Roman Urdu E-commerce Dataset (RUECD) with 26,824 reviews and RUSA-19 with 10,015 reviews. It achieved an accuracy of 80.63% for binary classification and 67% for ternary classification. The attention mechanism proved crucial in focusing on important sentiment-bearing words despite spelling inconsistencies, thereby enhancing classification accuracy. Despite these advancements, the study acknowledged limitations related to class imbalance in datasets and the persistent lack of standardized grammar in Roman Urdu.
+Khan et al. (2024) further explored deep learning for Roman Urdu sentiment analysis, proposing an Adaptive BiLSTM model integrated with FastText and Word2Vec embeddings [11]. Their research, conducted on a Roman Urdu corpus, found that Adaptive BiLSTM combined with FastText embeddings yielded the best results. A significant finding was that FastText, due to its ability to capture subword information, was superior to Word2Vec for Roman Urdu, which is characterized by numerous morphological variations. A primary limitation of this approach was its struggle with mid-sentence code-switching, indicating that while subword information is beneficial, handling dynamic language shifts remains a challenge.
+Manzoor et al. (2020) focused on addressing lexical variation in Roman Urdu sentences through a Self-Attention Bidirectional LSTM (SA-BiLSTM) model, also incorporating Word2Vec and FastText embeddings [12]. Their experiments demonstrated that FastText produced better results than Word2Vec, reinforcing the importance of character-level information for Roman Urdu. The self-attention mechanism was effective in capturing dependencies within lexically varied text. However, the study was limited to sentence-level analysis, and its effectiveness in capturing document-level context or broader conversational sentiment was not fully explored.
+Mehmood et al. (2020) proposed an Xtreme-Multi Channel Hybrid Approach, specifically a CNN-BiLSTM architecture, for Roman Urdu sentiment analysis [13]. While specific performance metrics were cited in related work as approximately 90% accuracy, the core contribution was the multi-channel architecture's ability to capture diverse feature sets from the input text. This approach aimed to leverage both the local feature extraction capabilities of CNNs and the sequential modeling strengths of BiLSTMs. A significant limitation, however, is the increased complexity of such hybrid models, which can make them computationally intensive and challenging to deploy in real-time applications.
+An earlier foundational work by Ghulam et al. (2019) laid the groundwork for adapting deep learning methods to Roman Urdu sentiment analysis [14]. They utilized CNN and LSTM models on a Roman Urdu dataset, demonstrating significant accuracy improvements over traditional machine learning approaches, with reported accuracies around 80%. Their key finding was that deep learning models were inherently more robust to noise and informalities prevalent in Roman Urdu text compared to conventional ML algorithms. As an early study, its main limitation was the absence of more advanced mechanisms like attention, which have since proven crucial for handling complex linguistic phenomena.
+2.3. Transformer-Based or Recent Advanced Methods
+The emergence of 
+transformer models
+, particularly multilingual variants like mBERT and XLM-RoBERTa, has revolutionized the field of NLP, including sentiment analysis for code-switched and low-resource languages. These models, built on the self-attention mechanism, excel at capturing long-range dependencies and contextual embeddings, making them highly effective for understanding complex linguistic patterns and cross-lingual phenomena.
+Younas et al. (2020) directly addressed the sentiment analysis of code-mixed Roman Urdu-English social media text, a problem central to this project [15]. They proposed fine-tuning multilingual transformer models, specifically Multilingual BERT (mBERT) and XLM-RoBERTa (XLM-R). Their experiments on a custom code-mixed Roman Urdu-English dataset revealed that XLM-R achieved a superior F1-score of 71% compared to mBERT. This key finding underscored XLM-R's enhanced capability in handling code-switching due to its pre-training on a massive multilingual corpus. However, the study noted the high computational resource requirements for training and fine-tuning these large models, and a performance drop with extremely informal or highly ambiguous code-switched text.
+Nazir et al. (2025) further advanced the field by focusing on multiclass sentiment analysis in code-mixed data of low-resource languages, including Roman Urdu, Roman Punjabi, and English [16]. They developed an optimized mBERT model, termed CMSA-mBERT, which was trained on a collected dataset of code-mixed comments. The CMSA-mBERT model achieved an impressive 79.94% accuracy and a 79.87% F1-measure. A significant finding was the substantial improvement of +22.55% in accuracy over benchmark algorithms, demonstrating the effectiveness of fine-tuned multilingual transformers for complex code-mixed scenarios. The primary limitation was the inherent complexity in handling three-way code-mixing, which still presents challenges for comprehensive contextual understanding.
+Ashraf et al. (2024) explored revolutionizing Urdu sentiment analysis by harnessing the power of XLM-R and GPT-2 [17]. While their primary focus was on the Urdu script, their methodology involved using BERT embeddings and passing them to a proposed classifier for sentiment classification. They introduced a new dataset, LUCSA-23, comprising over 65,000 Urdu reviews. Their transformer-based approach achieved a high accuracy of 95%, significantly outperforming existing state-of-the-art methods. This research highlighted the immense potential of large transformer models for large-scale sentiment analysis in morphologically rich languages. A limitation, however, is that the reported high performance was primarily on Urdu script, and its direct applicability and performance on Roman Urdu, with its unique spelling variations, might differ.
+Patwa et al. (2020) provided an overview of the SemEval-2020 Task 9 on Sentiment Analysis of Code-Mixed Tweets (SentiMix 2020), which is highly relevant to this project's target datasets [18]. This task involved sentiment analysis of code-mixed tweets in Hinglish (Hindi-English) and Spanglish (Spanish-English), with datasets of 20K and 19K examples, respectively. The most successful approaches among participants were BERT-like models and ensemble methods, with the best performance achieving a 75.0% F1-score for Hinglish. This key finding solidified the position of BERT-based models as state-of-the-art for code-mixed sentiment analysis. While Roman Urdu was not the direct focus, the insights gained from Hinglish, a similar code-switched phenomenon, are highly applicable. A limitation is the absence of specific Roman Urdu-English code-mixed datasets within this particular SemEval task.
+In another contribution, Nazir et al. (2025) further investigated leveraging multilingual transformers for multiclass sentiment analysis in low-resource code-mixed datasets, specifically focusing on Roman Urdu and English [19]. Their proposed solution utilized a multilingual transformer (mBERT) and achieved an accuracy of 79.94%. The study's key finding was that multilingual transformers are more adept at handling the morphological complexities and informalities of code-mixed languages compared to traditional deep learning models. However, the requirement for extensive fine-tuning and the computational resources needed for optimal performance were identified as practical limitations.
+Khan et al. (2026) explored enhancing Urdu sentiment classification using mBERT and XLM-R [20]. Their research demonstrated that contextual embeddings derived from these transformer models significantly outperformed traditional SVM and Naïve Bayes classifiers for Urdu sentiment analysis. The key finding was that the ability of transformers to capture deep contextual information made them superior for modeling the nuances of Urdu sentiment. Despite these advancements, the models still faced challenges with accurately interpreting mid-sentence cross-lingual shifts, indicating an area for further improvement.
+Nazeer et al. (2024) conducted a qualitative analysis of code-switching dynamics in Urdu-English multilingual ChatGPT models, providing insights into the capabilities of large language models (LLMs) in this domain [21]. While not a dedicated sentiment analysis paper, their work involved using ChatGPT (GPT-3.5/4) to generate text sets and analyze code-switched patterns. Their findings suggested that while LLMs show considerable promise in generating and understanding code-switched text, they still struggle with specific nuances and the subtle contextual shifts inherent in Urdu-English code-switching. A significant limitation is that this study focused on qualitative analysis and pattern identification rather than quantitative sentiment classification performance.
+Ashiq et al. (2024) presented a hybrid model for Roman Urdu hate speech detection, which, while not directly sentiment analysis, is a closely related task involving emotional valence [22]. Their solution combined machine learning and deep learning techniques on Twitter Roman Urdu text. The hybrid approach demonstrated improved detection capabilities over single models, suggesting that combining different methodologies can be beneficial for nuanced social media text analysis. The limitation is its specific focus on hate speech, meaning its findings may not directly translate to general sentiment classification across all emotional polarities.
+Chattu et al. (2025) provided a broader perspective on sentiment classification for low-resource languages using transformer-based architectures [23]. Their research, which involved code-mixed datasets, concluded that transformers represent the new state-of-the-art for code-mixed sentiment analysis, achieving high accuracy compared to earlier deep learning models. The key finding was the superior performance of transformers in capturing the intricate contextual relationships in code-mixed data. However, a persistent limitation across such studies is the data scarcity for specific low-resource language pairs, which hinders the development of more robust and generalizable models.
+Finally, Xie et al. (2026) offered a review of multilingual sentiment analysis, providing a comparative analysis of models like mBERT and XLM-R across various multilingual corpora [24]. Their review indicated that XLM-R generally outperforms mBERT in cross-lingual tasks, attributing this to its larger pre-training corpus and architectural design. For instance, mBERT achieved an accuracy of 0.7656 in some multilingual contexts. While a general review, it reinforces the superior capabilities of XLM-R for multilingual contexts. A limitation is its broad scope, which means it provides less specific detail on Roman Urdu-English code-switching compared to dedicated studies.
+3. Comparative Literature Table
+Sr. No
+Ref
+Year
+Method
+Dataset
+Findings / Accuracy
+Limitations
+1
+[3]
+2016
+Naïve Bayes, Decision Tree, KNN (BoW)
+300 Roman Urdu opinions
+NB outperformed DT, KNN
+Small dataset, binary classification
+2
+[4]
+2022
+SVM, NB, DT, KNN (BoW)
+26,824 Roman Urdu e-commerce reviews
+SVM: 67% accuracy
+Spelling variations, lack of standardization
+3
+[5]
+2025
+Hybrid TF-IDF (Word+Char) + Ensemble ML
+22,000+ Roman Urdu reviews
+Ensemble: 79.19% accuracy
+Extreme code-mixing, deep semantic shifts
+4
+[6]
+2022
+Supervised ML (SVM, NB) with Feature Engineering
+24,000 Roman Urdu reviews
+Max 91% accuracy
+High dependency on manual feature selection
+5
+[7]
+2019
+Naïve Bayes, LRSGD, SVM
+Varied Roman Urdu dataset
+>80% accuracy
+Scalability issues with diverse social media
+6
+[8]
+2023
+Naïve Bayes, SVM, Random Forest
+Kaggle Roman Urdu dataset
+NB highest accuracy
+May not generalize to noisy social media
+7
+[9]
+2022
+CNN-LSTM + SVM
+MDPI, RUSA, RUSA-19, UCL datasets
+Up to 90.4% accuracy
+High computational cost, large annotated datasets
+8
+[10]
+2022
+RU-BiLSTM (Attention, Word2Vec/GloVe/FastText)
+RUECD (26,824), RUSA-19 (10,015)
+Binary: 80.63%, Ternary: 67% accuracy
+Class imbalance, lack of standardized grammar
+9
+[11]
+2024
+Adaptive BiLSTM (FastText, Word2Vec)
+Roman Urdu corpus
+FastText superior to Word2Vec
+Struggles with mid-sentence code-switching
+10
+[12]
+2020
+SA-BiLSTM (Word2Vec, FastText)
+Roman Urdu sentences
+FastText better than Word2Vec
+Limited to sentence-level analysis
+11
+[13]
+2020
+Xtreme-Multi Channel Hybrid (CNN-BiLSTM)
+Roman Urdu dataset
+~90% accuracy
+Model complexity, real-time deployment challenges
+12
+[14]
+2019
+CNN and LSTM models
+Roman Urdu dataset
+~80% accuracy
+Lacked attention mechanisms (early study)
+13
+[15]
+2020
+mBERT, XLM-RoBERTa (fine-tuned)
+Code-mixed Roman Urdu-English
+XLM-R: 71% F1-score
+High resource requirement, extreme informalities
+14
+[16]
+2025
+Optimized mBERT (CMSA-mBERT)
+Code-mixed RU, RP, English comments
+79.94% accuracy, 79.87% F1
+Complexity of three-way code-mixing
+15
+[17]
+2024
+XLM-R, GPT-2 (BERT embeddings)
+LUCSA-23 (65,000+ Urdu reviews)
+95% accuracy
+Primarily Urdu script, Roman Urdu performance may vary
+16
+[18]
+2020
+BERT-like models, Ensemble methods
+Hinglish (20K), Spanglish (19K) tweets
+Hinglish: 75.0% F1-score
+No specific Roman Urdu-English dataset
+17
+[19]
+2025
+Multilingual Transformer (mBERT)
+Code-mixed Roman Urdu and English
+79.94% accuracy
+Extensive fine-tuning required
+18
+[20]
+2026
+mBERT, XLM-R
+Urdu sentiment dataset
+Outperformed traditional ML
+Challenges with mid-sentence cross-lingual shifts
+19
+[21]
+2024
+ChatGPT (GPT-3.5/4)
+Generated text sets
+Qualitative analysis of patterns
+Not dedicated SA, qualitative focus
+20
+[22]
+2024
+Hybrid ML + DL
+Twitter Roman Urdu text
+Improved hate speech detection
+Focused on hate speech, not general sentiment
+21
+[23]
+2025
+Transformer-based architectures
+Code-mixed datasets
+High accuracy
+Data scarcity for specific language pairs
+22
+[24]
+2026
+mBERT, XLM-R (Comparative Review)
+Various multilingual corpora
+XLM-R generally outperforms mBERT
+Broad scope, less Roman Urdu specificity
+4. Conclusion
+The literature review reveals a clear progression in sentiment analysis techniques for code-switched Roman Urdu-English social media text, moving from foundational traditional machine learning models to sophisticated deep learning architectures, and culminating in the highly effective transformer-based models. While early approaches provided initial insights, they were often hampered by the informal nature of the language, lack of standardized spelling, and the need for extensive feature engineering. Deep learning models, particularly CNN-LSTM and BiLSTM with attention mechanisms, offered significant improvements by automatically learning features and capturing sequential dependencies. However, the most substantial advancements have been achieved with multilingual transformer models like mBERT and XLM-RoBERTa, which leverage pre-training on vast multilingual corpora to understand complex contextual embeddings and cross-lingual shifts. These models consistently demonstrate superior performance, although challenges related to computational resources, extreme informalities, and the scarcity of highly specific code-mixed datasets persist. Future research should focus on developing more resource-efficient transformer models and creating larger, more diverse, and finely annotated code-switched Roman Urdu-English datasets to further enhance the accuracy and robustness of sentiment analysis in this challenging linguistic domain.
+5. References
+[1] A. Younas, R. Nasim, S. Ali, G. Wang and F. Qi, "Sentiment Analysis of Code-Mixed Roman Urdu-English Social Media Text using Deep Learning Approaches," in 
+2020 IEEE 23rd International Conference on Computer and Information Science and Engineering (ICCIS)
+, 2020, pp. 1-6.
+[2] M. K. Nazir, C. N. Faisal, M. A. Habib and H. Ahmad, "Leveraging Multilingual Transformer for Multiclass Sentiment Analysis in Code-Mixed Data of Low-Resource Languages,"
+IEEE Access
+, 2025.
+[3] M. Bilal, H. Israr, M. Shahid and A. Khan, "Sentiment classification of Roman-Urdu opinions using Naïve Bayesian, Decision Tree and KNN classification techniques,"
+Journal of King Saud University - Computer and Information Sciences
+, vol. 28, no. 3, pp. 330-344, 2016.
+[4] B. Chandio, A. Shaikh, M. Bakhtyar, M. Alrizq and S. K. Memon, "Sentiment analysis of Roman Urdu on e-commerce reviews using machine learning,"
+Computers, Materials & Continua
+, vol. 70, no. 1, pp. 1851-1865, 2022.
+[5] A. Hannan, L. Ali and R. M. Asif, "An Efficient Machine Learning Framework for Roman Urdu Sentiment Analysis Using Hybrid Word–Character TF-IDF Features,"
+Pakistan Journal of Scientific Research
+, vol. 5, no. 02, pp. 161-169, 2025.
+[6] M. A. Qureshi, M. Asif, M. F. Hassan, A. Abid and A. Kamal, "Sentiment analysis of reviews in natural language: Roman Urdu as a case study,"
+IEEE Access
+, vol. 10, pp. 2400-2412, 2022.
+[7] A. Rafique and M. K. Malik, "Sentiment analysis for Roman Urdu,"
+International Journal of Advanced Computer Science and Applications
+, vol. 10, no. 1, pp. 1-6, 2019.
+[8] M. Malik, H. Ghous, M. I. Ali, M. Ismail and Z. H. Ali, "Sentiment analysis of roman text: challenges, opportunities, and future directions,"
+International Journal of Information Science and Computing Technology
+, vol. 1, no. 1, pp. 58-67, 2023.
+[9] L. Khan, A. Amjad, K. M. Afaq and H. T. Chang, "Deep Sentiment Analysis Using CNN-LSTM Architecture of English and Roman Urdu Text Shared in Social Media,"
+Applied Sciences
+, vol. 12, no. 5, p. 2694, 2022.
+[10] B. A. Chandio, S. Imran, J. Baber and M. Bakhtyar, "Attention-Based RU-BiLSTM Sentiment Analysis Model for Roman Urdu,"
+Applied Sciences
+, vol. 12, no. 7, p. 3641, 2022.
+[11] M. Khan, A. Naseer, A. Wali and M. Tamoor, "A roman Urdu corpus for sentiment analysis,"
+The Computer Journal
+, vol. 67, no. 9, pp. 2864-2875, 2024.
+[12] M. A. Manzoor, S. Mamoon, S. K. Tao and Z. Ali, "Lexical variation and sentiment analysis of Roman Urdu sentences with deep neural networks,"
+International Journal of Advanced Computer Science and Applications
+, vol. 11, no. 1, pp. 1-8, 2020.
+[13] F. Mehmood, M. U. Ghani, M. A. Ibrahim and R. Shahzadi, "A precisely xtreme-multi channel hybrid approach for roman urdu sentiment analysis," in
+2020 IEEE 23rd International Conference on Computer and Information Science and Engineering (ICCIS)
+, 2020, pp. 1-6.
+[14] H. Ghulam, M. S. Khan, M. A. Khan and M. A. Khan, "Deep Learning-Based Sentiment Analysis for Roman Urdu Text,"
+Procedia Computer Science
+, vol. 151, pp. 220-227, 2019.
+[15] A. Younas, R. Nasim, S. Ali, G. Wang and F. Qi, "Sentiment Analysis of Code-Mixed Roman Urdu-English Social Media Text using Deep Learning Approaches," in
+2020 IEEE 23rd International Conference on Computer and Information Science and Engineering (ICCIS)
+, 2020, pp. 1-6.
+[16] M. K. Nazir, C. N. Faisal, M. A. Habib and H. Ahmad, "Leveraging Multilingual Transformer for Multiclass Sentiment Analysis in Code-Mixed Data of Low-Resource Languages,"
+IEEE Access
+, 2025.
+[17] M. R. Ashraf, M. Ahmad, M. Alvi and M. Alvi, "Revolutionizing Urdu Sentiment Analysis: Harnessing the Power of XLM-R and GPT-2,"
+Computers, Materials & Continua
+, vol. 79, no. 1, pp. 1-15, 2024.
+[18] P. Patwa, G. Aguilar, S. Kar, S. Pandey, S. PYKL, B. Gambäck, T. Chakraborty, T. Solorio and A. Das, "SemEval-2020 Task 9: Overview of Sentiment Analysis of Code-Mixed Tweets," in
+Proceedings of the Fourteenth Workshop on Semantic Evaluation
+, 2020, pp. 774-790.
+[19] M. K. Nazir, C. N. Faisal, M. A. Habib and H. Ahmad, "Leveraging Multilingual Transformer for Multiclass Sentiment Analysis in Code-Mixed Data of Low-Resource Languages,"
+IEEE Access
+, 2025.
+[20] H. F. Khan, "Enhancing Urdu Sentiment Classification through Contextual Embeddings,"
+ACL Anthology
+, 2026.
+[21] I. Nazeer, J. Rehman and M. Butt, "Exploring Code-Switching Dynamics in Urdu-English Multilingual ChatGPT Models: Patterns, Challenges, and Implications,"
+Journal of Policy Research
+, vol. 10, no. 1, pp. 1-15, 2024.
+[22] W. Ashiq, "Roman urdu hate speech detection using hybrid machine learning and deep learning approaches,"
+PeerJ Computer Science
+, vol. 10, p. e1132, 2024.
+[23] K. Chattu, "Sentiment classification for telugu using transformed based models,"
+Journal of King Saud University - Computer and Information Sciences
+, vol. 37, no. 1, pp. 1-10, 2025.
+[24] X. Xie, "A Review of Multilingual Sentiment Analysis,"
+Preprints.org
+, 2026.

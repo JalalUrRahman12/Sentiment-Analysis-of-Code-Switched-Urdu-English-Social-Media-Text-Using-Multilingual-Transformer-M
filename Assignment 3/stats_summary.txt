@@ -1,0 +1,9 @@
+Total Rows: 18631
+Neutral: 6829
+Positive: 6208
+Negative: 5594
+Average Sentence Length: 14.94
+Max Sentence Length: 56
+Total Tokens: 278348
+English Tokens Count: 261519
+Urdu Tokens Count: 16829

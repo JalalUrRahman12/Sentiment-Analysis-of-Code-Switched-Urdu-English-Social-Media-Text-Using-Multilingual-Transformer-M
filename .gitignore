@@ -1,0 +1,27 @@
+# Git Ignore for NLP Semester Project
+
+# Exclude python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Exclude large model checkpoints and tokenizer files
+**/models/
+*.pt
+*.bin
+*.safetensors
+*.h5
+*.onnx
+
+# Exclude logs
+*.log
+
+# Exclude large raw datasets
+raw_temp.csv
+train_conll.txt
+
+# Exclude user settings/IDE settings
+.vscode/
+.idea/
+.ipynb_checkpoints/

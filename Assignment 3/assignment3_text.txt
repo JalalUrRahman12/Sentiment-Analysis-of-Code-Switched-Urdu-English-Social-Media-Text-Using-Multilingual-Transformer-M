@@ -1,0 +1,104 @@
+
+Assignment 3
+Objective
+The objectives of this milestone are:
+To perform detailed statistical and analytical exploration of NLP datasets
+To understand and explain the mathematical foundations behind modern NLP architectures
+To implement the proposed NLP system using suitable frameworks and tools
+To evaluate the implemented system using standard NLP evaluation metrics
+To prepare a professional technical report containing implementation and experimental details
+Task 1: Dataset Analysis and Statistical Exploration
+Students are required to perform detailed exploratory analysis of the dataset(s) selected for the project. The analysis must go beyond simple dataset description and should provide meaningful insights into the structure, characteristics, and challenges of the data. Students must also generate appropriate visualizations such as class distribution graphs, token frequency plots, histogram of sentence lengths, and other relevant analytical charts.
+In addition to statistics, students should discuss:
+Why the selected dataset is suitable for the proposed problem
+Challenges present in the dataset
+Data preprocessing decisions and their impact
+Expected limitations of the dataset
+The discussion should demonstrate technical understanding rather than only reporting numerical values.
+Task 2: Proposed Architecture and Mathematical Modelling
+Students are required to provide a detailed technical explanation of their proposed NLP architecture. The explanation should present the architecture in the form of logical components/modules and describe the role of each component within the system pipeline.
+Students should clearly explain components such as:
+Text preprocessing module
+Embedding representation layer
+Neural network or Transformer components
+Attention mechanisms
+Encoder-decoder structures
+Classification or generation layers
+Output and evaluation modules
+In addition to architectural discussion, students must explain the mathematical foundations behind the selected approach. The mathematical modelling section should include equations, formulas, optimization functions, and mathematical reasoning associated with the implemented methods.
+Examples may include:
+TF-IDF mathematical formulation
+Word embedding representation
+Attention score computation
+Self-attention mechanism
+Softmax and probability calculations
+Loss functions
+Gradient optimization methods
+Transformer mathematical formulations
+Task 3: Implementation of Proposed Architecture
+Students are required to implement the proposed NLP architecture using suitable programming frameworks and libraries. The implementation should demonstrate practical realization of the architecture proposed in Milestones 1 and 2.
+Students should implement major components of the pipeline including:
+Dataset loading and preprocessing
+Feature extraction or embeddings
+Model implementation
+Training pipeline
+Prediction/inference pipeline
+Evaluation module
+The implementation should clearly reflect understanding of the architecture rather than simply using prebuilt APIs without explanation.
+Students may use frameworks such as:
+PyTorch
+TensorFlow
+HuggingFace Transformers
+Scikit-learn
+spaCy
+NLTK
+Task 4: Experimental Results and Performance Evaluation
+Students are required to experimentally evaluate the implemented system using suitable NLP evaluation metrics. The evaluation should not only present results but also provide interpretation and analysis of model performance.
+Possible evaluation metrics include:
+Accuracy
+Precision
+Recall
+F1-score
+BLEU
+ROUGE
+Perplexity
+Task 5: Technical Report, Similarity Report, and AI Declaration
+Students must prepare a detailed professional technical report documenting all aspects of the project milestone. The report should be written in a research-oriented style and must include proper technical explanations, figures, tables, equations, and references.
+In addition to the report, students are required to submit:
+Similarity/Plagiarism Report
+AI Usage Declaration Report
+Contribution details of each group member
+Failure to submit similarity and AI reports may result in deduction of marks.
+Submission Requirements
+Students must submit:
+Complete technical report (PDF)
+Source code (.zip or GitHub link)
+Dataset references/links
+Visualizations and screenshots
+Similarity report
+AI declaration report
+
+
+Evaluation Rubric
+CLO-2, CLO-3, CLO-4
+Bonus Marks
+Implementation of advanced Transformer-based architectures
+Comparative experimentation using multiple models
+High-quality analytical visualizations and error analysis
+Use of multiple datasets with comparative study
+Well-optimized implementation with reproducible experiments
+Strong technical discussion and critical analysis of results
+
+ | Namal University Mianwali Department of Computer Science
+Course | CSC-355 Natural Language Processing | CSC-355 Natural Language Processing | CSC-355 Natural Language Processing
+Instructor | Dr. Muzamil Ahmed | Session / Semester | 2022-2026 (8th)
+Total Marks | 30 | Submission Date | 20-05-2026
+Component | Marks
+Dataset statistical analysis and visualization quality | 5
+Architecture explanation and component-wise discussion | 5
+Mathematical modeling and technical formulations | 5
+Quality of implementation and experimentation | 7
+Experimental evaluation and performance analysis | 4
+Technical report writing and professional formatting | 2
+Similarity report, AI declaration, and documentation quality | 2
+Total | 30
